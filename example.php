@@ -35,7 +35,7 @@ $func_cycle_2 = function (int $iterations) {
 
 
 // Create new timer
-$timer = new AppTimer\Timer("New timer", ['Foo' => "Bar"]);
+$timer = new Nullform\AppTimer\Timer("New timer", ['Foo' => "Bar"]);
 
 // Report file options
 // $timer->report_filename = "AppTimerReport.log";

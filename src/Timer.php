@@ -1,11 +1,11 @@
 <?php
 
-namespace AppTimer;
+namespace Nullform\AppTimer;
 
 /**
  * Class for measure execution time of code sections.
  *
- * @package AppTimer
+ * @package Nullform\AppTimer
  */
 class Timer
 {

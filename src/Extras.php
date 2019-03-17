@@ -1,11 +1,11 @@
 <?php
 
-namespace AppTimer;
+namespace Nullform\AppTimer;
 
 /**
  * Additional information.
  *
- * @package AppTimer
+ * @package Nullform\AppTimer
  */
 class Extras
 {

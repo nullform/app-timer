@@ -1,11 +1,11 @@
 <?php
 
-namespace AppTimer;
+namespace Nullform\AppTimer;
 
 /**
  * Timer report.
  *
- * @package AppTimer
+ * @package Nullform\AppTimer
  */
 class Report
 {

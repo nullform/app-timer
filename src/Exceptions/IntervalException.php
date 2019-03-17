@@ -1,9 +1,9 @@
 <?php
 
-namespace AppTimer\Exceptions;
+namespace Nullform\AppTimer\Exceptions;
 
 /**
- * @package AppTimer\Exceptions
+ * @package Nullform\AppTimer\Exceptions
  */
 class IntervalException extends \Exception
 {

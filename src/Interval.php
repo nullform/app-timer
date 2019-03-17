@@ -1,11 +1,11 @@
 <?php
 
-namespace AppTimer;
+namespace Nullform\AppTimer;
 
 /**
  * Timer interval.
  *
- * @package AppTimer
+ * @package Nullform\AppTimer
  */
 class Interval
 {
