@@ -1,0 +1,21 @@
+{
+  "name": "nullform/app-timer",
+  "description": "Timing with nested intervals",
+  "type": "library",
+  "keywords": ["timer", "intervals"],
+  "homepage": "https://github.com/nullform/app-timer",
+  "license": "MIT",
+  "authors": [
+	{
+	  "name": "Pavel Novikov"
+	}
+  ],
+  "autoload": {
+	"psr-4": {"AppTimer\\": "src/"}
+  },
+  "require": {
+	"php": ">=7.1",
+	"ext-bcmath": "*",
+	"ext-json": "*"
+  }
+}
