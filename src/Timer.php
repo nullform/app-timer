@@ -77,7 +77,9 @@ class Timer
                 . (string)$_SERVER['REQUEST_URI'];
         }
 
-        $this->report->http_method = (string)$_SERVER['REQUEST_METHOD'];
+        if (!empty($_SERVER['REQUEST_METHOD'])) {
+            $this->report->http_method = (string)$_SERVER['REQUEST_METHOD'];
+        }
 
         $this->report->description = (string)$description;
 
