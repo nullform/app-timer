@@ -70,16 +70,14 @@ class Interval
      * Interval constructor.
      *
      * @param string $description
-     * @throws Exceptions\IntervalException
      */
     public function __construct(string $description)
     {
-        if (empty($description)) {
-            throw new Exceptions\IntervalException("No description for interval");
-        }
-
         $this->id = \uniqid();
         $this->description = $description;
+        if (empty($this->description)) {
+            $this->description = "Interval #" . $this->id;
+        }
     }
 
     /**

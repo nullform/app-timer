@@ -71,8 +71,16 @@ class Timer
 
         $this->report->time = \date("Y-m-d H:i:s");
 
-        if (!empty($_SERVER['HTTP_HOST'])) {
-            $this->report->uri = (string)$_SERVER['REQUEST_SCHEME'] . "://"
+        if (!empty($_SERVER['HTTP_HOST']) && $this->report->sapi != "cli") {
+            $scheme = "http";
+            if (
+                (!empty($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == "https")
+                ||
+                (!empty($_SERVER['HTTPS']) && \strtolower($_SERVER['HTTPS']) == "on")
+            ) {
+                $scheme = "https";
+            }
+            $this->report->uri = $scheme . "://"
                 . (string)$_SERVER['HTTP_HOST']
                 . (string)$_SERVER['REQUEST_URI'];
         }
@@ -105,21 +113,12 @@ class Timer
      * @param string $description Interval description.
      * @param array $extras Additional information (associative array width [string => string] pairs).
      * @return Interval Started interval.
-     * @throws Exceptions\TimerException
      */
     public function start(string $description, array $extras = []): Interval
     {
 
-        try {
-
-            // Create new interval
-            $interval = new Interval($description);
-
-        } catch (Exceptions\IntervalException $exception) {
-
-            throw new Exceptions\TimerException($exception->getMessage());
-
-        }
+        // Create new interval
+        $interval = new Interval($description);
 
         if (!empty($extras)) {
             foreach ($extras as $_key => $_value) {
@@ -158,15 +157,15 @@ class Timer
      * $timer->stop();
      * ```
      *
-     * @return Interval Stopped interval.
-     * @throws Exceptions\TimerException
+     * @param array $extras Additional information (associative array width [string => string] pairs).
+     * @return Interval Stopped interval or null if there is no current interval.
      */
-    public function stop(): Interval
+    public function stop(array $extras = []): ?Interval
     {
         $end = \microtime(true);
 
         if (!($this->current_interval instanceof Interval)) {
-            throw new Exceptions\TimerException("No interval found for stopping");
+            return null;
         }
 
         $this->current_interval->end = $end;
@@ -175,6 +174,12 @@ class Timer
             $this->current_interval->start,
             self::DURATION_PRECISION
         );
+
+        if (!empty($extras)) {
+            foreach ($extras as $_key => $_value) {
+                $this->current_interval->extras()->add((string)$_key, (string)$_value);
+            }
+        }
 
         $parent = $this->current_interval->parent;
         $interval = $this->current_interval;
@@ -212,7 +217,7 @@ class Timer
      *
      * @return Report
      * @uses Timer::stopAll()
-     * @throws Exceptions\TimerException
+     * @throws Exceptions\ReportException
      */
     public function report(): Report
     {
@@ -227,9 +232,9 @@ class Timer
 
         if (!empty($this->report_dir)) {
             if (!\is_dir($this->report_dir) || !\is_writable($this->report_dir)) {
-                throw new Exceptions\TimerException("Report dir not found or not writable");
+                throw new Exceptions\ReportException("Report dir not found or not writable");
             } else {
-                $this->report_dir = \preg_replace("/(\/|\\\)$/", "", $this->report_dir);
+                $this->report_dir = \preg_replace("/([\/\\\])$/", "", $this->report_dir);
                 $this->report_dir .= DIRECTORY_SEPARATOR;
             }
         }

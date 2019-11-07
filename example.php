@@ -4,8 +4,7 @@ include "src/Extras.php";
 include "src/Interval.php";
 include "src/Report.php";
 include "src/Timer.php";
-include "src/Exceptions/TimerException.php";
-include "src/Exceptions/IntervalException.php";
+include "src/Exceptions/ReportException.php";
 
 /**
  * @param int $iterations
@@ -56,14 +55,15 @@ $cycle_2_interval = $timer->start("Cycle 2");
 // Alternative way to add additional information
 $cycle_2_interval->extras()->add("Iterations", "10000");
 $func_cycle_2(10000);
-$timer->stop();
+$stopped_interval = $timer->stop(['Iterations complete' => 10000]);
+$stopped_interval->extras()->remove("Iterations");
 
 $timer->stop();
 
 
 $timer->start("Going to sleep");
 sleep(1);
-$timer->stop();
+$timer->stop(['Seconds' => 1]);
 
 // Get parent interval duration
 $cycles_interval_duration = $cycles_interval->duration;
