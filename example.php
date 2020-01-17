@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(E_ALL);
+
 include "src/Extras.php";
 include "src/Interval.php";
 include "src/Report.php";

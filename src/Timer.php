@@ -184,7 +184,7 @@ class Timer
         $parent = $this->current_interval->parent;
         $interval = $this->current_interval;
 
-        unset($this->current_interval);
+        $this->current_interval = null;
 
         if (!empty($parent)) {
             $this->current_interval = $this->getIntervalById($parent, $this->intervals);
@@ -216,8 +216,8 @@ class Timer
      * properties (report_dir and report_filename).
      *
      * @return Report
-     * @uses Timer::stopAll()
      * @throws Exceptions\ReportException
+     * @uses Timer::stopAll()
      */
     public function report(): Report
     {
