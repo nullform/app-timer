@@ -202,7 +202,7 @@ class Timer
 
             $this->stop(); // Stop current interval
 
-            if ($this->current_interval instanceof Interval) { // If the stopped interval had a parent interval
+            if (!empty($this->current_interval) && $this->current_interval instanceof Interval) { // If the stopped interval had a parent interval
                 $this->stopAll(); // Stop parent intervals recursive
             }
 
